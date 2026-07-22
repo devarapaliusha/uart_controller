@@ -1,0 +1,13 @@
+# Target labels
+ uart-interrupt-test
+# Source files and their labels
+C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/CMakeFiles/uart-interrupt-test
+C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/CMakeFiles/uart-interrupt-test.rule
+C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/CMakeFiles/uart-interrupt-test-complete.rule
+C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-build.rule
+C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-configure.rule
+C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-download.rule
+C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-install.rule
+C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-mkdir.rule
+C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-patch.rule
+C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-update.rule

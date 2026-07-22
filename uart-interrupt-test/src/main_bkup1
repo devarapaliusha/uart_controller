@@ -1,0 +1,182 @@
+#include <zephyr/kernel.h>
+#include <zephyr/device.h>
+#include <zephyr/devicetree.h>
+#include <zephyr/drivers/uart.h>
+#include <zephyr/logging/log.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+LOG_MODULE_REGISTER(nmea_debug, LOG_LEVEL_DBG);
+
+/* Set this to the exact label you've discovered (e.g. "UART_1") */
+//#define UART_LABEL "uart0"
+// #define UART_LABEL DT_LABEL(DT_NODELABEL(uart1))
+//#define UART_LABEL DT_LABEL(DT_NODELABEL(arduino_serial))
+//#define UART_LABEL DT_LABEL(DT_ALIAS(uart1))
+#define UART_NODE DT_NODELABEL(uart1)
+#define UART_LABEL DT_PROP(UART_NODE, label)
+
+/* throttle prints to at most once per THROTTLE_MS ms */
+#define THROTTLE_MS 1000
+static char line[256];
+
+static int64_t last_print_ms = 0;
+
+static bool nmea_check_checksum(const char *s)
+{
+    if (!s || s[0] != '$') return false;
+    const char *p = strchr(s, '*');
+    if (!p || (p - s) < 1) return false;
+    unsigned char cs = 0;
+    for (const char *q = s + 1; q < p; q++) cs ^= (unsigned char)(*q);
+    unsigned int rx = 0;
+    if (sscanf(p + 1, "%2x", &rx) != 1) return false;
+    return cs == (unsigned char)rx;
+}
+
+static double nmea_to_deg(const char *field, char hemi)
+{
+    if (!field || field[0] == '\0') return 0.0;
+    double v = atof(field);
+    int deg = (int)(v / 100.0);
+    double minutes = v - (deg * 100.0);
+    double dec = deg + minutes / 60.0;
+    if (hemi == 'S' || hemi == 'W') dec = -dec;
+    return dec;
+}
+
+static void print_fix_throttled(const char *which, double lat, double lon, const char *time, const char *extra)
+{
+    int64_t now = k_uptime_get();
+    if (now - last_print_ms >= THROTTLE_MS) {
+        if (extra && extra[0]) {
+            LOG_DBG("FIX (%s) lat=%.6f lon=%.6f time=%s %s", which, lat, lon, time?time:"?", extra);
+        } else {
+            LOG_DBG("FIX (%s) lat=%.6f lon=%.6f time=%s", which, lat, lon, time?time:"?");
+        }
+        last_print_ms = now;
+    } else {
+        LOG_DBG("Throttled FIX (%s) time=%s", which, time?time:"?");
+    }
+}
+
+/* Parse and handle a single NMEA line (assumes null-terminated, no newline) */
+static void handle_nmea_line(const char *line)
+{
+    if (!nmea_check_checksum(line)) {
+        LOG_DBG("Bad checksum, skip");
+        return;
+    }
+
+    /* Work on a local copy */
+    char buf[256];
+    strncpy(buf, line, sizeof(buf)-1);
+    buf[sizeof(buf)-1] = '\0';
+
+    /* Tokenize fields */
+    char *fields[32] = {0};
+    int nf = 0;
+    char *tok = strtok(buf, ",");
+    while (tok && nf < (int)ARRAY_SIZE(fields)) {
+        fields[nf++] = tok;
+        tok = strtok(NULL, ",");
+    }
+    if (nf == 0) return;
+
+    const char *type = fields[0];
+    /* Prefer RMC (status A) */
+    if (strstr(type, "RMC") != NULL) {
+        if (nf > 6 && fields[2] && fields[2][0] == 'A') {
+            const char *utc = fields[1];
+            const char *lat_f = fields[3];
+            const char *lat_h = fields[4];
+            const char *lon_f = fields[5];
+            const char *lon_h = fields[6];
+            double lat = nmea_to_deg(lat_f, lat_h ? lat_h[0] : 'N');
+            double lon = nmea_to_deg(lon_f, lon_h ? lon_h[0] : 'E');
+            print_fix_throttled("RMC", lat, lon, utc, "");
+            return;
+        } else {
+            LOG_DBG("RMC: no fix");
+            return;
+        }
+    }
+
+    /* Fallback to GGA */
+    if (strstr(type, "GGA") != NULL) {
+        if (nf > 7 && fields[6] && fields[6][0] != '0') {
+            const char *utc = fields[1];
+            const char *lat_f = fields[2];
+            const char *lat_h = fields[3];
+            const char *lon_f = fields[4];
+            const char *lon_h = fields[5];
+            const char *nsat = fields[7];
+            double lat = nmea_to_deg(lat_f, lat_h ? lat_h[0] : 'N');
+            double lon = nmea_to_deg(lon_f, lon_h ? lon_h[0] : 'E');
+            char extra[64] = {0};
+            snprintf(extra, sizeof(extra), "sats=%s", nsat?nsat:"?");
+            print_fix_throttled("GGA", lat, lon, utc, extra);
+            return;
+        } else {
+            LOG_DBG("GGA: no fix");
+            return;
+        }
+    }
+
+    /* For debugging, show we parsed a supported sentence */
+    LOG_DBG("Parsed other NMEA: %s", type);
+}
+
+void main(void)
+{
+    printk("APP BOOTED\n");
+
+    //const struct device *uart = device_get_binding(UART_LABEL);
+    const struct device *uart = DEVICE_DT_GET(UART_NODE);
+    if (!uart) {
+        LOG_ERR("device_get_binding(\"%s\") failed - check DT label (use DT printer)", UART_LABEL);
+    }
+
+    if (!device_is_ready(uart)) {
+        LOG_ERR("UART device not ready");
+        return;
+    }
+
+    printk("NMEA reader started 1234 on %s", UART_LABEL);
+
+    int pos = 0;
+    uint8_t c;
+
+    while (1) {
+        int ret = uart_poll_in(uart, &c);
+        if (ret == 0) {
+            printk("poll SU");
+            if (c == '\r') continue;
+            if (c == '\n' || pos >= (int)(sizeof(line)-2)) {
+                printk("POLL PO");
+                if (pos > 0) {
+                    line[pos] = '\0';
+                    printk("RAW NMEA:12345 %s", line); /* debug-level raw line */
+                    //handle_nmea_line(line);
+                    pos = 0;
+                }
+            } else {
+                
+                line[pos++] = (char)c;
+            }
+        } else {
+            /* tiny sleep to reduce CPU use, do not make this large */
+            int errs = uart_err_check(uart);
+            if (errs) {
+                printk("UART errors: 0x%08x\n", errs);
+            }
+            //else
+            //{
+            //    printk("NO E");
+            //}
+             k_msleep(1);
+            //
+        }
+    }
+}

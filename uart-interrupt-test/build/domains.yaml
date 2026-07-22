@@ -1,0 +1,7 @@
+default: uart-interrupt-test
+build_dir: C:/ncs/v3.1.1/application/uart-interrupt-test/build
+domains:
+  - name: uart-interrupt-test
+    build_dir: C:/ncs/v3.1.1/application/uart-interrupt-test/build/uart-interrupt-test
+flash_order:
+  - uart-interrupt-test

@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/CMakeFiles/uart-interrupt-test"
+		},
+		{
+			"file" : "C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/CMakeFiles/uart-interrupt-test.rule"
+		},
+		{
+			"file" : "C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/CMakeFiles/uart-interrupt-test-complete.rule"
+		},
+		{
+			"file" : "C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-build.rule"
+		},
+		{
+			"file" : "C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-configure.rule"
+		},
+		{
+			"file" : "C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-download.rule"
+		},
+		{
+			"file" : "C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-install.rule"
+		},
+		{
+			"file" : "C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-mkdir.rule"
+		},
+		{
+			"file" : "C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-patch.rule"
+		},
+		{
+			"file" : "C:/ncs/v3.1.1/application/uart-interrupt-test/build/_sysbuild/sysbuild/images/uart-interrupt-test-prefix/src/uart-interrupt-test-stamp/uart-interrupt-test-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"uart-interrupt-test"
+		],
+		"name" : "uart-interrupt-test"
+	}
+}

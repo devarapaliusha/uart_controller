@@ -1,0 +1,7 @@
+default: uart_poll_test
+build_dir: C:/ncs/v3.1.1/application/uart_poll_test/build
+domains:
+  - name: uart_poll_test
+    build_dir: C:/ncs/v3.1.1/application/uart_poll_test/build/uart_poll_test
+flash_order:
+  - uart_poll_test

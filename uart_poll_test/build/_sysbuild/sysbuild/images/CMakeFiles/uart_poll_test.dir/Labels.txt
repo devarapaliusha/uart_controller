@@ -1,0 +1,13 @@
+# Target labels
+ uart_poll_test
+# Source files and their labels
+C:/ncs/v3.1.1/application/uart_poll_test/build/_sysbuild/sysbuild/images/CMakeFiles/uart_poll_test
+C:/ncs/v3.1.1/application/uart_poll_test/build/_sysbuild/sysbuild/images/CMakeFiles/uart_poll_test.rule
+C:/ncs/v3.1.1/application/uart_poll_test/build/_sysbuild/sysbuild/images/CMakeFiles/uart_poll_test-complete.rule
+C:/ncs/v3.1.1/application/uart_poll_test/build/_sysbuild/sysbuild/images/uart_poll_test-prefix/src/uart_poll_test-stamp/uart_poll_test-build.rule
+C:/ncs/v3.1.1/application/uart_poll_test/build/_sysbuild/sysbuild/images/uart_poll_test-prefix/src/uart_poll_test-stamp/uart_poll_test-configure.rule
+C:/ncs/v3.1.1/application/uart_poll_test/build/_sysbuild/sysbuild/images/uart_poll_test-prefix/src/uart_poll_test-stamp/uart_poll_test-download.rule
+C:/ncs/v3.1.1/application/uart_poll_test/build/_sysbuild/sysbuild/images/uart_poll_test-prefix/src/uart_poll_test-stamp/uart_poll_test-install.rule
+C:/ncs/v3.1.1/application/uart_poll_test/build/_sysbuild/sysbuild/images/uart_poll_test-prefix/src/uart_poll_test-stamp/uart_poll_test-mkdir.rule
+C:/ncs/v3.1.1/application/uart_poll_test/build/_sysbuild/sysbuild/images/uart_poll_test-prefix/src/uart_poll_test-stamp/uart_poll_test-patch.rule
+C:/ncs/v3.1.1/application/uart_poll_test/build/_sysbuild/sysbuild/images/uart_poll_test-prefix/src/uart_poll_test-stamp/uart_poll_test-update.rule

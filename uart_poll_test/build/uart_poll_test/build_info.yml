@@ -1,0 +1,61 @@
+cmake:
+  application:
+    configuration-dir: 'C:/ncs/v3.1.1/application/uart_poll_test'
+    source-dir: 'C:/ncs/v3.1.1/application/uart_poll_test'
+  board:
+    name: 'nrf9151dk'
+    path:
+     - 'C:/ncs/v3.1.1/zephyr/boards/nordic/nrf9151dk'
+    qualifiers: 'nrf9151/ns'
+    revision: ''
+  devicetree:
+    bindings-dirs:
+     - 'C:/ncs/v3.1.1/nrf/dts/bindings'
+     - 'C:/ncs/v3.1.1/zephyr/boards/nordic/nrf9151dk/dts/bindings'
+     - 'C:/ncs/v3.1.1/zephyr/dts/bindings'
+    files:
+     - 'C:/ncs/v3.1.1/zephyr/boards/nordic/nrf9151dk/nrf9151dk_nrf9151_ns.dts'
+     - 'boards/app.overlay'
+    include-dirs:
+     - 'C:/ncs/v3.1.1/nrf/include'
+     - 'C:/ncs/v3.1.1/nrf/dts/common'
+     - 'C:/ncs/v3.1.1/nrf/dts/riscv'
+     - 'C:/ncs/v3.1.1/nrf/dts/arm'
+     - 'C:/ncs/v3.1.1/nrf/dts'
+     - 'C:/ncs/v3.1.1/zephyr/boards/nordic/nrf9151dk/dts'
+     - 'C:/ncs/v3.1.1/zephyr/include'
+     - 'C:/ncs/v3.1.1/zephyr/include/zephyr'
+     - 'C:/ncs/v3.1.1/zephyr/dts/common'
+     - 'C:/ncs/v3.1.1/zephyr/dts/vendor'
+     - 'C:/ncs/v3.1.1/zephyr/dts/rx'
+     - 'C:/ncs/v3.1.1/zephyr/dts/x86'
+     - 'C:/ncs/v3.1.1/zephyr/dts/xtensa'
+     - 'C:/ncs/v3.1.1/zephyr/dts/sparc'
+     - 'C:/ncs/v3.1.1/zephyr/dts/riscv'
+     - 'C:/ncs/v3.1.1/zephyr/dts/posix'
+     - 'C:/ncs/v3.1.1/zephyr/dts/arm64'
+     - 'C:/ncs/v3.1.1/zephyr/dts/arm'
+     - 'C:/ncs/v3.1.1/zephyr/dts/arc'
+     - 'C:/ncs/v3.1.1/zephyr/dts'
+    user-files:
+     - 'boards/app.overlay'
+  images:
+   - name: 'tfm'
+     source-dir: 'C:/ncs/v3.1.1/modules/tee/tf-m/trusted-firmware-m'
+  kconfig:
+    files:
+     - 'C:/ncs/v3.1.1/zephyr/boards/nordic/nrf9151dk/nrf9151dk_nrf9151_ns_defconfig'
+     - 'C:/ncs/v3.1.1/application/uart_poll_test/prj.conf'
+     - 'C:/ncs/v3.1.1/application/uart_poll_test/build/uart_poll_test/zephyr/.config.sysbuild'
+    user-files:
+     - 'prj.conf'
+  toolchain:
+    name: 'zephyr'
+    path: 'C:/ncs/toolchains/b8b84efebd/opt/zephyr-sdk'
+  vendor-specific:
+    nordic:
+      svdfile: 'C:/ncs/v3.1.1/modules/hal/nordic/nrfx/mdk/nrf9120.svd'
+  zephyr:
+    version: '4.1.99'
+    zephyr-base: 'C:/ncs/v3.1.1/zephyr'
+version: '0.1.0'
